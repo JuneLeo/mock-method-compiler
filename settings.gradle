@@ -1,1 +1,1 @@
-include ':mock-method-compiler'
+include ':library'
