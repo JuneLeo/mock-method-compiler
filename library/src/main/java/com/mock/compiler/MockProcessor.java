@@ -33,6 +33,7 @@ import javax.tools.Diagnostic;
 /**
  * Created by spf on 2018/12/24.
  */
+@Deprecated
 @AutoService(Processor.class)
 public class MockProcessor extends AbstractProcessor {
 
@@ -51,6 +52,7 @@ public class MockProcessor extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnv) {
+        System.out.println("编译 MockProcess");
         Set<? extends Element> elements = roundEnv.getElementsAnnotatedWith(MockMethod.class);
         if (elements == null || elements.isEmpty()) {
             return false;
@@ -113,6 +115,9 @@ public class MockProcessor extends AbstractProcessor {
                 .addParameter(parameterSpec);
 
         for (Element element : elements) {
+            if (element == null){
+                continue;
+            }
             String className = element.getEnclosingElement().asType().toString();
             String methodName = element.getSimpleName().toString();
             MockMethod annotation = element.getAnnotation(MockMethod.class);
